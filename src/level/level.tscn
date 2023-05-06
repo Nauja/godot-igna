@@ -71,7 +71,7 @@ script = ExtResource("8_k1r70")
 
 [node name="RoverViewRoot" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(96, -160)
+position = Vector2(0, -192)
 
 [node name="RoverMap" parent="RoverViewRoot" instance=ExtResource("9_7xilp")]
 
@@ -81,24 +81,23 @@ _player_path = NodePath("../Player")
 _input_repeat = 0.25
 
 [node name="RoverCamera" type="Camera2D" parent="RoverViewRoot"]
+position = Vector2(96, 32)
 offset = Vector2(64, 64)
 script = ExtResource("8_nie0l")
 
 [node name="Player" parent="RoverViewRoot" instance=ExtResource("10_qq7b2")]
 unique_name_in_owner = true
-position = Vector2(88, 56)
 
 [node name="RocketViewRoot" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(416, -160)
+position = Vector2(320, -192)
 
 [node name="RocketMap" parent="RocketViewRoot" instance=ExtResource("13_j1b8h")]
 
 [node name="RocketController" type="Node2D" parent="RocketViewRoot"]
-position = Vector2(-320, 0)
 script = ExtResource("14_4qmhu")
 _back_to_title_delay = 7
 
 [node name="RocketCamera" type="Camera2D" parent="RocketViewRoot"]
-offset = Vector2(64, 64)
+position = Vector2(160, 96)
 script = ExtResource("14_yivys")

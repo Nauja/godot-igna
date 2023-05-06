@@ -30,8 +30,17 @@ enum _EView { MAP, ROVER, ROCKET }
 @onready var _rocket_view_root: Node = %RocketViewRoot
 # Current view
 var _view: _EView = _EView.MAP
-# List of all entities on the map
-var _entities: Array[Entity]
+# Entities on the curent map
+var _entities: Array[Entity]:
+	get:
+		match _view:
+			_EView.MAP:
+				return _map.entities
+			_EView.ROVER:
+				return _rover_map.entities
+			_EView.ROCKET:
+				return _rocket_map.entities
+		return []
 
 
 func _ready():
@@ -51,10 +60,6 @@ func _ready():
 	RoverSignals.rover_moved.connect(_on_rover_moved)
 	LevelSignals._game_over = _game_over
 	LevelSignals._enter_rocket = _enter_rocket
-	# Gather entities
-	_entities = []
-	for node in get_tree().get_nodes_in_group("entity"):
-		_entities.append(node)
 	# Place rover on start tile
 	_rover.tile = Utils.world_to_tile(find_child("RoverStart").position)
 	# Start level
@@ -179,27 +184,39 @@ func _compute_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 
 
 func _compute_range(center: Vector2i, distance: int) -> Array[Vector2i]:
-	var result: Array[Vector2i] = []
 	var queue: Array[Vector2i] = [center]
-	var visited_tiles = {}
-	var tile = Vector2i(0, 0)
-	while len(queue) != 0:
-		var visited = queue.pop_front()
-		visited_tiles[visited] = true
-		if not _is_walkable(visited):
-			continue
+	var cost_so_far = {center: 0}
+	var reachbox = Rect2i(center.x - distance, center.y - distance, distance * 2, distance * 2)
+	var next = Vector2i(0, 0)
 
-		result.push_back(visited)
+	while len(queue) > 0 and len(queue) < 512:
+		var current = queue.pop_back()
+		var new_cost: int = cost_so_far[current] + 1
+
 		for i in range(-1, 2):
 			for j in range(-1, 2):
-				if i != 0 or j != 0:
-					tile.x = visited.x + i
-					tile.y = visited.y + j
-					if visited_tiles.get(tile):
+				if i == 0 or j == 0 and i != j:
+					next.x = current.x + i
+					next.y = current.y + j
+					if (
+						next.x < reachbox.position.x
+						or next.y < reachbox.position.y
+						or next.x > reachbox.end.x
+						or next.y > reachbox.end.y
+					):
 						continue
-					if Utils.distance(center, tile) > distance:
+					if not _is_walkable(next):
 						continue
-					queue.push_back(tile)
+
+					var old_cost = cost_so_far.get(next)
+					if old_cost == null or new_cost < old_cost:
+						cost_so_far[next] = new_cost
+						queue.append(next)
+
+	var result: Array[Vector2i] = []
+	for tile in cost_so_far:
+		if cost_so_far[tile] <= distance:
+			result.append(tile)
 
 	return result
 

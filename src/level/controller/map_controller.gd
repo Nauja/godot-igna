@@ -54,7 +54,7 @@ func _on_level_ready():
 
 
 func _stop_rover():
-	_update_path()
+	_update_path(true)
 	_refresh()
 
 
@@ -101,7 +101,7 @@ func _process_cursor_select(delta):
 	if _desired_cursor_tile != _cursor.tile:
 		_cursor.tile = _desired_cursor_tile
 		if _desired_cursor_tile != _rover.tile:
-			_update_path()
+			_update_path(false)
 		_refresh()
 		LevelSignals.notify_cursor_moved()
 
@@ -120,7 +120,7 @@ func _process_cursor_select(delta):
 func _physics_process_rover_move(delta):
 	if not _rover.is_moving or _remaining_range <= 0 or len(_path) == 0:
 		_rover.is_moving = false
-		_update_path()
+		_update_path(true)
 		_refresh()
 		return
 
@@ -158,8 +158,9 @@ func _move_completed() -> void:
 
 
 # Update the selected path
-func _update_path():
-	_range = LevelSignals.compute_range(_rover.tile, _rover.range)
+func _update_path(with_range: bool):
+	if with_range:
+		_range = LevelSignals.compute_range(_rover.tile, _rover.range)
 	_path = LevelSignals.compute_path(_rover.tile, _cursor.tile)
 
 

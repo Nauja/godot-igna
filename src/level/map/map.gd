@@ -22,6 +22,14 @@ var width: int:
 var height: int:
 	get:
 		return height
+# Entities on the map
+var entities: Array[Entity] = []:
+	get:
+		return entities
+# Cache tiles with collisions
+var _collision_map: Array[bool] = []
+# Cache tiles with spikes
+var _spikes_map: Array[bool] = []
 
 
 func _ready():
@@ -36,6 +44,23 @@ func _ready():
 		_tile_maps.append(tile_map)
 	width = tile_width * Constants.TILE_SIZE.x
 	height = tile_height * Constants.TILE_SIZE.x
+	# Cache collisions and spikes
+	_collision_map = []
+	_spikes_map = []
+	var tile = Vector2i(0, 0)
+	var index = 0
+	for j in range(tile_height):
+		tile.y = j
+		for i in range(tile_width):
+			tile.x = i
+			_collision_map.append(_tile_has_bool(tile, "collision"))
+			_spikes_map.append(_tile_has_bool(tile, "spikes"))
+			index += 1
+	# Gather entities
+	entities = []
+	for node in get_tree().get_nodes_in_group("entity"):
+		if is_ancestor_of(node):
+			entities.append(node)
 
 
 func _tile_has_bool(tile: Vector2i, name: String) -> bool:
@@ -47,11 +72,17 @@ func _tile_has_bool(tile: Vector2i, name: String) -> bool:
 	return false
 
 
+func _tile_to_index(tile: Vector2i) -> int:
+	return tile.x + tile.y * tile_width
+
+
 # Return if a tile is walkable
 func is_walkable(tile: Vector2i) -> bool:
-	return not _tile_has_bool(tile, "collision")
+	var index = _tile_to_index(tile)
+	return not _collision_map[index] if index >= 0 and index < len(_collision_map) else false
 
 
 # Return if a tile is spikes
 func is_spikes(tile: Vector2i) -> bool:
-	return _tile_has_bool(tile, "spikes")
+	var index = _tile_to_index(tile)
+	return _spikes_map[index] if index >= 0 and index < len(_spikes_map) else false
