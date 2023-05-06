@@ -6,6 +6,7 @@
 export.cfg
 venv/
 .vscode/
+build/
 
 # Mono-specific ignores
 .mono/
