@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dllu5w8u1uh46"]
+[gd_scene load_steps=19 format=3 uid="uid://dllu5w8u1uh46"]
 
 [ext_resource type="Script" path="res://src/level/level.gd" id="1_20w2u"]
 [ext_resource type="PackedScene" uid="uid://bdl3sx05xjv84" path="res://src/level/hud/hud.tscn" id="2_77qnb"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://src/level/controller/map_controller.gd" id="7_w7e8d"]
 [ext_resource type="Script" path="res://src/level/camera/map_camera.gd" id="8_k1r70"]
 [ext_resource type="Script" path="res://src/level/camera/rover_camera.gd" id="8_nie0l"]
+[ext_resource type="PackedScene" uid="uid://1e0ml8tk1s1f" path="res://src/level/entity/bomb/bomb.tscn" id="8_qstlw"]
 [ext_resource type="PackedScene" uid="uid://43mktudtc0m8" path="res://src/level/map/rover_map/rover_map.tscn" id="9_7xilp"]
 [ext_resource type="PackedScene" uid="uid://d2uwlgt0x4to5" path="res://src/level/entity/player/player.tscn" id="10_qq7b2"]
 [ext_resource type="PackedScene" uid="uid://utmillepmpdf" path="res://src/level/map/rocket_map/rocket_map.tscn" id="13_j1b8h"]
@@ -33,6 +34,7 @@ script = ExtResource("1_20w2u")
 _map_path = NodePath("MapViewRoot/Debug")
 _rover_map_path = NodePath("RoverViewRoot/RoverMap")
 _rocket_map_path = NodePath("RocketViewRoot/RocketMap")
+_bomb_scene = ExtResource("8_qstlw")
 
 [node name="HUD" parent="." instance=ExtResource("2_77qnb")]
 

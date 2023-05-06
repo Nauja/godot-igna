@@ -12,6 +12,8 @@ enum _EView { MAP, ROVER, ROCKET }
 # Instance of the rocket map
 @export_node_path("Map") var _rocket_map_path: NodePath
 @onready var _rocket_map: Map = get_node(_rocket_map_path)
+# Scene to spawn bombs
+@export var _bomb_scene: PackedScene
 # Instance of the cursor
 @onready var _cursor: Cursor = %Cursor
 # Instance of the player
@@ -41,6 +43,8 @@ var _entities: Array[Entity]:
 			_EView.ROCKET:
 				return _rocket_map.entities
 		return []
+# Bombs on the map
+var _bombs: Array[Entity] = []
 
 
 func _ready():
@@ -60,6 +64,9 @@ func _ready():
 	RoverSignals.rover_moved.connect(_on_rover_moved)
 	LevelSignals._game_over = _game_over
 	LevelSignals._enter_rocket = _enter_rocket
+	RoverSignals._drop_bomb = _drop_bomb
+	RoverSignals._is_bomb = _is_bomb
+	RoverSignals._remove_bomb = _remove_bomb
 	# Place rover on start tile
 	_rover.tile = Utils.world_to_tile(find_child("RoverStart").position)
 	# Start level
@@ -271,3 +278,26 @@ func _game_over() -> void:
 
 func _victory() -> void:
 	pass
+
+
+func _drop_bomb() -> void:
+	if not _is_bomb(_rover.tile):
+		var bomb = _bomb_scene.instantiate()
+		_map_view_root.add_child(bomb)
+		bomb.tile = _rover.tile
+		_bombs.append(bomb)
+
+
+func _is_bomb(tile: Vector2i) -> bool:
+	for bomb in _bombs:
+		if bomb.tile == tile:
+			return true
+
+	return false
+
+
+func _remove_bomb(tile: Vector2i) -> void:
+	for i in range(len(_bombs) - 1, -1, -1):
+		if _bombs[i].tile == tile:
+			_bombs[i].queue_free()
+			_bombs.remove_at(i)

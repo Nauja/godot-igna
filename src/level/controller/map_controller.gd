@@ -105,6 +105,9 @@ func _process_cursor_select(delta):
 		_refresh()
 		LevelSignals.notify_cursor_moved()
 
+	if Input.is_action_pressed("bomb"):
+		RoverSignals.drop_bomb()
+
 	if Input.is_action_just_pressed("action"):
 		if _cursor.tile == _rover.tile:
 			RoverSignals.enter_rover()

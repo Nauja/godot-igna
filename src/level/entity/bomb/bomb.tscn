@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://1e0ml8tk1s1f"]
+
+[ext_resource type="PackedScene" uid="uid://uxuquccgygyq" path="res://src/level/entity/entity.tscn" id="1_gst1f"]
+[ext_resource type="Texture2D" uid="uid://dhd3qw8drlnpd" path="res://src/level/entity/bomb/bomb.tres" id="2_1ssh4"]
+
+[node name="Bomb" instance=ExtResource("1_gst1f")]
+
+[node name="Sprite2D" parent="." index="0"]
+z_index = 3
+texture = ExtResource("2_1ssh4")

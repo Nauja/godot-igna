@@ -6,6 +6,9 @@ var _get_module: Callable
 var _enter_rover: Callable
 var _exit_rover: Callable
 var _stop_rover: Callable
+var _drop_bomb: Callable
+var _is_bomb: Callable
+var _remove_bomb: Callable
 signal rover_entered
 signal rover_exited
 signal rover_moved
@@ -22,6 +25,7 @@ func reset() -> void:
 	_enter_rover = Callable()
 	_exit_rover = Callable()
 	_stop_rover = Callable()
+	_drop_bomb = Callable()
 
 
 # Get the rover instance
@@ -81,3 +85,17 @@ func notify_rover_charging():
 
 func notify_rover_hit():
 	emit_signal("rover_hit")
+
+
+func drop_bomb():
+	if _drop_bomb:
+		_drop_bomb.call()
+
+
+func is_bomb(tile: Vector2i) -> bool:
+	return _is_bomb.call(tile) if _is_bomb else false
+
+
+func remove_bomb(tile: Vector2i):
+	if _remove_bomb:
+		_remove_bomb.call(tile)
