@@ -60,7 +60,7 @@ func _action() -> void:
 		self.tile = path[0]
 
 		# If the worm moved on a bomb
-		if _check_bomb_killed:
+		if _check_bomb_killed():
 			return
 		# If the worm moved on the rover
 		elif self.tile == rover.tile:

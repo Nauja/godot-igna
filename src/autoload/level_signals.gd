@@ -20,6 +20,8 @@ var _close_dialogue: Callable
 var _set_dialogue: Callable
 var _is_dialogue_open: Callable
 signal human_rescued(sheet)
+var _get_fire_progression: Callable
+signal fire_progressed
 
 
 func reset() -> void:
@@ -38,6 +40,7 @@ func reset() -> void:
 	_close_dialogue = Callable()
 	_set_dialogue = Callable()
 	_is_dialogue_open = Callable()
+	_get_fire_progression = Callable()
 
 
 # Notify when the level is ready
@@ -139,3 +142,11 @@ func is_dialogue_open() -> bool:
 
 func notify_human_rescued(sheet: FellowHumanSheet) -> void:
 	emit_signal("human_rescued", sheet)
+
+
+func get_fire_progression() -> int:
+	return _get_fire_progression.call() if _get_fire_progression else 0
+
+
+func notify_fire_progressed() -> void:
+	emit_signal("fire_progressed")

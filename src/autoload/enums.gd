@@ -8,6 +8,3 @@ enum EDirection { LEFT, RIGHT, UP, DOWN }
 
 # Modules of the rover
 enum EModule { POWER, ENGINE }
-
-# Possible entities on the map
-enum EEntity { NONE, ROVER, POWER_CELL, ENGINE_PART, BOMB, WORM }

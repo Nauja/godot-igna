@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bwfcqjna57fxr" path="res://src/level/entity/rover/rover_left.tres" id="4_4jkd8"]
 
 [node name="Rover" instance=ExtResource("1_p4afk")]
+z_index = 1
 script = ExtResource("1_w5rdv")
 _sheet = ExtResource("2_bdrvb")
 

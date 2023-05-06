@@ -110,18 +110,21 @@ func set_charging(val: bool) -> void:
 func on_moved() -> void:
 	action_count += 1
 	move_count += 1
+	print("rover moved: action_count=", action_count, ", move_count=", move_count)
 	RoverSignals.notify_rover_moved()
 	RoverSignals.notify_action_performed()
 
 
 # Stop the vehicle
 func stop() -> void:
+	print("rover stopped")
 	move_count = 0
 	is_moving = false
 
 
 # Hit by an obstacle
 func hit() -> void:
+	print("rover hit")
 	stop()
 
 	var em = engine_module

@@ -86,7 +86,7 @@ script = ExtResource("2_ycnww")
 _sheet = ExtResource("3_tyoop")
 
 [node name="Sprite2D" parent="." index="0"]
-z_index = 1
+z_index = 2
 texture = ExtResource("4_rl5kr")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]

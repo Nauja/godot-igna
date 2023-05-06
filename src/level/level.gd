@@ -1,5 +1,6 @@
 extends Node
 
+enum _EState { IDLE, GAME_OVER }
 enum _EView { MAP, ROVER, ROCKET }
 
 # Instance of the map
@@ -14,6 +15,8 @@ enum _EView { MAP, ROVER, ROCKET }
 @onready var _rocket_map: Map = get_node(_rocket_map_path)
 # Scene to spawn bombs
 @export var _bomb_scene: PackedScene
+# Delay at the game over screen before going to title
+@export var _game_over_delay: int
 # Instance of the cursor
 @onready var _cursor: Cursor = %Cursor
 # Instance of the player
@@ -32,6 +35,8 @@ enum _EView { MAP, ROVER, ROCKET }
 @onready var _rocket_view_root: Node = %RocketViewRoot
 # Current view
 var _view: _EView = _EView.MAP
+# Current state
+var _state: _EState = _EState.IDLE
 # Entities on the curent map
 var _entities: Array[Entity]:
 	get:
@@ -45,9 +50,12 @@ var _entities: Array[Entity]:
 		return []
 # Bombs on the map
 var _bombs: Array[Entity] = []
+# Delay before going back to title
+var _game_over_timer: float
 
 
 func _ready():
+	set_process(false)
 	LevelSignals._tile_width = _get_tile_width
 	LevelSignals._tile_height = _get_tile_height
 	LevelSignals._width = _get_width
@@ -137,6 +145,13 @@ func _enter_rocket() -> void:
 	LevelSignals.notify_rocket_entered()
 
 
+func _process(delta):
+	if _state == _EState.GAME_OVER:
+		_game_over_timer -= delta
+		if _game_over_timer <= 0:
+			GameSignals.load_screen(Enums.EScreen.TITLE)
+
+
 class _PriorityTile:
 	var tile: Vector2i
 	var priority: int
@@ -168,7 +183,7 @@ func _compute_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 				if (i == 0 or j == 0) and i != j:
 					next.x = current.tile.x + i
 					next.y = current.tile.y + j
-					if not _is_walkable(next):
+					if not _map.is_walkable(next):
 						continue
 
 					var new_cost = cost_so_far[current.tile] + 1  # add extra costs here
@@ -212,7 +227,7 @@ func _compute_range(center: Vector2i, distance: int) -> Array[Vector2i]:
 						or next.y > reachbox.end.y
 					):
 						continue
-					if not _is_walkable(next):
+					if not _map.is_walkable(next):
 						continue
 
 					var old_cost = cost_so_far.get(next)
@@ -273,11 +288,9 @@ func _on_rover_moved() -> void:
 
 
 func _game_over() -> void:
-	pass
-
-
-func _victory() -> void:
-	pass
+	_state = _EState.GAME_OVER
+	_game_over_timer = _game_over_delay
+	set_process(true)
 
 
 func _drop_bomb() -> void:
