@@ -9,6 +9,7 @@ var _stop_rover: Callable
 var _drop_bomb: Callable
 var _is_bomb: Callable
 var _remove_bomb: Callable
+signal bomb_dropped
 signal rover_entered
 signal rover_exited
 signal rover_moved
@@ -99,3 +100,7 @@ func is_bomb(tile: Vector2i) -> bool:
 func remove_bomb(tile: Vector2i):
 	if _remove_bomb:
 		_remove_bomb.call(tile)
+
+
+func notify_bomb_dropped():
+	emit_signal("bomb_dropped")

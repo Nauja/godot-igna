@@ -22,6 +22,7 @@ var _state: _EState = _EState.NONE:
 func _ready():
 	super()
 	RoverSignals.action_performed.connect(_on_action_performed)
+	RoverSignals.bomb_dropped.connect(_check_bomb_killed)
 	_state = _EState.IDLE
 
 
@@ -49,6 +50,8 @@ func _action() -> void:
 	if _state == _EState.IDLE:
 		if Utils.distance(self.tile, rover.tile) < 32:
 			_state = _EState.MOVE
+			# Worm can appear on a bomb
+			_check_bomb_killed()
 	elif _state == _EState.MOVE:
 		var path = LevelSignals.compute_path(self.tile, rover.tile)
 		if len(path) == 0:
@@ -57,12 +60,21 @@ func _action() -> void:
 		self.tile = path[0]
 
 		# If the worm moved on a bomb
-		if RoverSignals.is_bomb(self.tile):
-			_state = _EState.KILLED
-			RoverSignals.remove_bomb(self.tile)
+		if _check_bomb_killed:
+			return
 		# If the worm moved on the rover
 		elif self.tile == rover.tile:
 			rover.hit()
 			_state = _EState.IDLE
 		elif Utils.distance(self.tile, rover.tile) > 64:
 			_state = _EState.IDLE
+
+
+# Check if worm is killed by a bomb
+func _check_bomb_killed() -> bool:
+	if _state == _EState.MOVE and RoverSignals.is_bomb(self.tile):
+		_state = _EState.KILLED
+		RoverSignals.remove_bomb(self.tile)
+		return true
+
+	return false

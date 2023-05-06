@@ -286,6 +286,7 @@ func _drop_bomb() -> void:
 		_map_view_root.add_child(bomb)
 		bomb.tile = _rover.tile
 		_bombs.append(bomb)
+		RoverSignals.notify_bomb_dropped()
 
 
 func _is_bomb(tile: Vector2i) -> bool:
