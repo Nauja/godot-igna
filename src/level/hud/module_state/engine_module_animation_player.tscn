@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://c1483ukdmeko2"]
+
+[ext_resource type="Texture2D" uid="uid://ceak0xkpp44hs" path="res://src/level/entity/module/engine_module/engine_module_1.tres" id="1_tebeh"]
+[ext_resource type="Texture2D" uid="uid://b31and8l6n3pw" path="res://src/level/entity/module/engine_module/engine_module_2.tres" id="2_taip6"]
+
+[sub_resource type="Animation" id="Animation_kravv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Border/ColorRect/HBoxContainer/ModuleSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_tebeh")]
+}
+
+[sub_resource type="Animation" id="Animation_d1kyx"]
+resource_name = "idle"
+length = 0.133337
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Border/ColorRect/HBoxContainer/ModuleSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("1_tebeh"), ExtResource("2_taip6")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6x570"]
+_data = {
+"RESET": SubResource("Animation_kravv"),
+"idle": SubResource("Animation_d1kyx")
+}
+
+[node name="EngineModuleAnimationPlayer" type="AnimationPlayer"]
+libraries = {
+"": SubResource("AnimationLibrary_6x570")
+}

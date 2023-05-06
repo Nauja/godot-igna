@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PowerStationSheet" load_steps=2 format=3 uid="uid://bl7jspquqs3h6"]
+
+[ext_resource type="Script" path="res://src/autoload/power_station_sheet.gd" id="1_jimtm"]
+
+[resource]
+script = ExtResource("1_jimtm")
+cursor_hint = "power station"
+cursor_priority = 0

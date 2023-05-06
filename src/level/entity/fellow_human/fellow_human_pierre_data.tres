@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FellowHumanSheet" load_steps=2 format=3 uid="uid://cthpa31ab7f6"]
+
+[ext_resource type="Script" path="res://src/autoload/fellow_human_sheet.gd" id="1_2btxk"]
+
+[resource]
+script = ExtResource("1_2btxk")
+name = "pierre"
+cursor_hint = "fellow human"
+cursor_priority = 0

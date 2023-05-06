@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ModuleSheet" load_steps=2 format=3 uid="uid://cyfus3ijvsphn"]
+
+[ext_resource type="Script" path="res://src/autoload/module_sheet.gd" id="1_ciyfd"]
+
+[resource]
+script = ExtResource("1_ciyfd")
+module = 1
+max_integrity = 3
+integrity = 3
+max_charge = 0
+charge = 1
+cursor_hint = "engine module"
+cursor_priority = 0

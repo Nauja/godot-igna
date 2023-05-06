@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3fxjo2esrjkp"]
+
+[ext_resource type="PackedScene" uid="uid://cwdpfx8xuiwx0" path="res://src/level/entity/crew/crew.tscn" id="1_t0jiw"]
+[ext_resource type="Texture2D" uid="uid://dwbto65gsjbvs" path="res://src/level/entity/crew/crew_anna.tres" id="2_b3a26"]
+[ext_resource type="Resource" uid="uid://dhgqy6wgnat5m" path="res://src/level/entity/crew/crew_anna_data.tres" id="2_bdyqr"]
+
+[node name="CrewAnna" instance=ExtResource("1_t0jiw")]
+_sheet = ExtResource("2_bdyqr")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_b3a26")

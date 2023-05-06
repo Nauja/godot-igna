@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EnginePartSheet" load_steps=2 format=3 uid="uid://ivdylurhy6bk"]
+
+[ext_resource type="Script" path="res://src/autoload/engine_part_sheet.gd" id="1_aahle"]
+
+[resource]
+script = ExtResource("1_aahle")
+cursor_hint = "engine part"
+cursor_priority = 0

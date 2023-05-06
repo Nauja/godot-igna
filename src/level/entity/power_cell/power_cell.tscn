@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3ke0kte473r"]
+
+[ext_resource type="PackedScene" uid="uid://uxuquccgygyq" path="res://src/level/entity/entity.tscn" id="1_t116t"]
+[ext_resource type="Resource" uid="uid://cla40t0p3eck" path="res://src/level/entity/power_cell/power_cell_data.tres" id="2_6ibgu"]
+[ext_resource type="Texture2D" uid="uid://bt13rfrct1agu" path="res://src/level/entity/power_cell/power_cell.tres" id="2_ndqpr"]
+[ext_resource type="Script" path="res://src/level/entity/pickable_entity.gd" id="4_boehy"]
+
+[node name="PowerCell" instance=ExtResource("1_t116t")]
+_sheet = ExtResource("2_6ibgu")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_ndqpr")
+
+[node name="PickableEntity" type="Node" parent="." index="1"]
+script = ExtResource("4_boehy")

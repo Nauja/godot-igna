@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://cml7cefib3peu"]
+
+[ext_resource type="PackedScene" uid="uid://uxuquccgygyq" path="res://src/level/entity/entity.tscn" id="1_nu5de"]
+[ext_resource type="Resource" uid="uid://ivdylurhy6bk" path="res://src/level/entity/engine_part/engine_part_data.tres" id="2_bmr0b"]
+[ext_resource type="Script" path="res://src/level/entity/pickable_entity.gd" id="3_rxsaq"]
+
+[node name="EnginePart" instance=ExtResource("1_nu5de")]
+_sheet = ExtResource("2_bmr0b")
+
+[node name="PickableEntity" type="Node" parent="." index="1"]
+script = ExtResource("3_rxsaq")

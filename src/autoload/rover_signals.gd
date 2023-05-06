@@ -1,0 +1,83 @@
+# Rover related signals
+extends Node
+
+var _get_rover: Callable
+var _get_module: Callable
+var _enter_rover: Callable
+var _exit_rover: Callable
+var _stop_rover: Callable
+signal rover_entered
+signal rover_exited
+signal rover_moved
+signal action_performed
+signal rover_charge_changed
+signal rover_integrity_changed
+signal rover_charging
+signal rover_hit
+
+
+func reset() -> void:
+	_get_rover = Callable()
+	_get_module = Callable()
+	_enter_rover = Callable()
+	_exit_rover = Callable()
+	_stop_rover = Callable()
+
+
+# Get the rover instance
+func get_rover() -> Rover:
+	return _get_rover.call() if _get_rover else null
+
+
+func get_module(val: Enums.EModule) -> Module:
+	return _get_module.call(val) if _get_module else null
+
+
+# Enter the rover and display the interior view
+func enter_rover() -> void:
+	if _enter_rover:
+		_enter_rover.call()
+
+
+# Exit the rover and display the map
+func exit_rover() -> void:
+	if _exit_rover:
+		_exit_rover.call()
+
+
+# Stop the rover if moving
+func stop_rover() -> void:
+	if _stop_rover:
+		_stop_rover.call()
+
+
+func notify_rover_entered():
+	emit_signal("rover_entered")
+
+
+func notify_rover_exited():
+	emit_signal("rover_exited")
+
+
+func notify_rover_moved():
+	emit_signal("rover_moved")
+
+
+func notify_action_performed():
+	emit_signal("action_performed")
+
+
+func notify_rover_charge_changed():
+	emit_signal("rover_charge_changed")
+
+
+func notify_rover_integrity_changed():
+	emit_signal("rover_integrity_changed")
+
+
+func notify_rover_charging():
+	emit_signal("rover_charging")
+
+
+func notify_rover_hit():
+	emit_signal("rover_hit")

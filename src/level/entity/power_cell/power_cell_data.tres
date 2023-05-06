@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PowerCellSheet" load_steps=2 format=3 uid="uid://cla40t0p3eck"]
+
+[ext_resource type="Script" path="res://src/autoload/power_cell_sheet.gd" id="1_pchsl"]
+
+[resource]
+script = ExtResource("1_pchsl")
+cursor_hint = "power cell"
+cursor_priority = 0

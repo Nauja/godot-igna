@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cg3pp3jyobhvh"]
+
+[ext_resource type="PackedScene" uid="uid://uxuquccgygyq" path="res://src/level/entity/entity.tscn" id="1_4tuhj"]
+[ext_resource type="Texture2D" uid="uid://b43c4sfng265e" path="res://src/level/entity/fellow_human/fellow_human.tres" id="2_rqy4o"]
+[ext_resource type="Script" path="res://src/level/entity/pickable_entity.gd" id="2_ukorb"]
+
+[node name="FellowHuman" instance=ExtResource("1_4tuhj")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_rqy4o")
+
+[node name="PickableEntity" type="Node" parent="." index="1"]
+script = ExtResource("2_ukorb")

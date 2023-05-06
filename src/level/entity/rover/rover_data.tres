@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RoverSheet" load_steps=4 format=3 uid="uid://mw1woq54dcnl"]
+
+[ext_resource type="Texture2D" uid="uid://bwfcqjna57fxr" path="res://src/level/entity/rover/rover_left.tres" id="1_004vn"]
+[ext_resource type="Script" path="res://src/autoload/rover_sheet.gd" id="2_rd5mh"]
+[ext_resource type="Texture2D" uid="uid://dgt71ladcjg4y" path="res://src/level/entity/rover/rover_up.tres" id="3_5puly"]
+
+[resource]
+script = ExtResource("2_rd5mh")
+up_texture = ExtResource("3_5puly")
+left_texture = ExtResource("1_004vn")
+bombs = 3
+speed = 25.0
+max_move_count = 32
+cursor_hint = "☉ to enter"
+cursor_priority = 0

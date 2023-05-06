@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwdpfx8xuiwx0"]
+
+[ext_resource type="PackedScene" uid="uid://uxuquccgygyq" path="res://src/level/entity/entity.tscn" id="1_hcmg0"]
+[ext_resource type="Script" path="res://src/level/entity/crew/crew.gd" id="2_e5tjy"]
+[ext_resource type="Script" path="res://src/level/entity/interactable_entity.gd" id="2_gr0ti"]
+
+[node name="Crew" instance=ExtResource("1_hcmg0")]
+script = ExtResource("2_e5tjy")
+
+[node name="InteractableEntity" type="Node" parent="." index="1"]
+script = ExtResource("2_gr0ti")

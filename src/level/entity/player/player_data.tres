@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlayerSheet" load_steps=5 format=3 uid="uid://b4uifbfd1qvlr"]
+
+[ext_resource type="Texture2D" uid="uid://bkrser3eimoyo" path="res://src/level/entity/player/player_down.tres" id="1_2oivt"]
+[ext_resource type="Texture2D" uid="uid://d35bk2jlrr8xw" path="res://src/level/entity/player/player_left.tres" id="2_1o3qe"]
+[ext_resource type="Script" path="res://src/autoload/player_sheet.gd" id="3_70c8d"]
+[ext_resource type="Texture2D" uid="uid://bd046bmeat8hf" path="res://src/level/entity/player/player_up.tres" id="4_lbc2k"]
+
+[resource]
+script = ExtResource("3_70c8d")
+up_texture = ExtResource("4_lbc2k")
+left_texture = ExtResource("2_1o3qe")
+down_texture = ExtResource("1_2oivt")
+cursor_hint = "player"
+cursor_priority = 0

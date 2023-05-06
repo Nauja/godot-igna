@@ -1,0 +1,13 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2b55rnhvw8c1"]
+
+[ext_resource type="PackedScene" uid="uid://uxuquccgygyq" path="res://src/level/entity/entity.tscn" id="1_p4afk"]
+[ext_resource type="Script" path="res://src/level/entity/rover/rover.gd" id="1_w5rdv"]
+[ext_resource type="Resource" uid="uid://mw1woq54dcnl" path="res://src/level/entity/rover/rover_data.tres" id="2_bdrvb"]
+[ext_resource type="Texture2D" uid="uid://bwfcqjna57fxr" path="res://src/level/entity/rover/rover_left.tres" id="4_4jkd8"]
+
+[node name="Rover" instance=ExtResource("1_p4afk")]
+script = ExtResource("1_w5rdv")
+_sheet = ExtResource("2_bdrvb")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("4_4jkd8")

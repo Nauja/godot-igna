@@ -1,0 +1,104 @@
+[gd_scene load_steps=18 format=3 uid="uid://dllu5w8u1uh46"]
+
+[ext_resource type="Script" path="res://src/level/level.gd" id="1_20w2u"]
+[ext_resource type="PackedScene" uid="uid://bdl3sx05xjv84" path="res://src/level/hud/hud.tscn" id="2_77qnb"]
+[ext_resource type="PackedScene" uid="uid://bvit6uasqxp0" path="res://src/level/entity/cursor/cursor.tscn" id="3_2q6qd"]
+[ext_resource type="PackedScene" uid="uid://dw3eai0yuod3p" path="res://src/level/map/debug/debug.tscn" id="3_fjpfs"]
+[ext_resource type="PackedScene" uid="uid://d2b55rnhvw8c1" path="res://src/level/entity/rover/rover.tscn" id="3_syn7l"]
+[ext_resource type="Texture2D" uid="uid://bcd8k2fh1vffv" path="res://src/tileset.png" id="4_208l4"]
+[ext_resource type="Script" path="res://src/level/controller/rover_controller.gd" id="6_w2nyn"]
+[ext_resource type="Script" path="res://src/level/controller/map_controller.gd" id="7_w7e8d"]
+[ext_resource type="Script" path="res://src/level/camera/map_camera.gd" id="8_k1r70"]
+[ext_resource type="Script" path="res://src/level/camera/rover_camera.gd" id="8_nie0l"]
+[ext_resource type="PackedScene" uid="uid://43mktudtc0m8" path="res://src/level/map/rover_map/rover_map.tscn" id="9_7xilp"]
+[ext_resource type="PackedScene" uid="uid://d2uwlgt0x4to5" path="res://src/level/entity/player/player.tscn" id="10_qq7b2"]
+[ext_resource type="PackedScene" uid="uid://utmillepmpdf" path="res://src/level/map/rocket_map/rocket_map.tscn" id="13_j1b8h"]
+[ext_resource type="Script" path="res://src/level/controller/rocket_controller.gd" id="14_4qmhu"]
+[ext_resource type="Script" path="res://src/level/camera/rocket_camera.gd" id="14_yivys"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c1ta5"]
+texture = ExtResource("4_208l4")
+texture_region_size = Vector2i(8, 8)
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jyvlb"]
+tile_size = Vector2i(8, 8)
+sources/0 = SubResource("TileSetAtlasSource_c1ta5")
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_20w2u")
+_map_path = NodePath("MapViewRoot/Debug")
+_rover_map_path = NodePath("RoverViewRoot/RoverMap")
+_rocket_map_path = NodePath("RocketViewRoot/RocketMap")
+
+[node name="HUD" parent="." instance=ExtResource("2_77qnb")]
+
+[node name="MapViewRoot" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Debug" parent="MapViewRoot" instance=ExtResource("3_fjpfs")]
+
+[node name="MovementTileMap" type="TileMap" parent="MapViewRoot"]
+z_index = 2
+tile_set = SubResource("TileSet_jyvlb")
+cell_quadrant_size = 8
+format = 2
+
+[node name="Cursor" parent="MapViewRoot" instance=ExtResource("3_2q6qd")]
+unique_name_in_owner = true
+position = Vector2(56, 32)
+
+[node name="Rover" parent="MapViewRoot" instance=ExtResource("3_syn7l")]
+unique_name_in_owner = true
+position = Vector2(56, 32)
+
+[node name="MapController" type="Node2D" parent="MapViewRoot"]
+script = ExtResource("7_w7e8d")
+_cursor_path = NodePath("../Cursor")
+_rover_path = NodePath("../Rover")
+_movement_tile_map_path = NodePath("../MovementTileMap")
+_grey_tile = Vector2i(0, 8)
+_blue_tile = Vector2i(1, 8)
+_white_tile = Vector2i(2, 8)
+_red_tile = Vector2i(3, 8)
+_input_repeat = 0.25
+
+[node name="MapCamera" type="Camera2D" parent="MapViewRoot"]
+script = ExtResource("8_k1r70")
+
+[node name="RoverViewRoot" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(96, -160)
+
+[node name="RoverMap" parent="RoverViewRoot" instance=ExtResource("9_7xilp")]
+
+[node name="RoverController" type="Node2D" parent="RoverViewRoot"]
+script = ExtResource("6_w2nyn")
+_player_path = NodePath("../Player")
+_input_repeat = 0.25
+
+[node name="RoverCamera" type="Camera2D" parent="RoverViewRoot"]
+offset = Vector2(64, 64)
+script = ExtResource("8_nie0l")
+
+[node name="Player" parent="RoverViewRoot" instance=ExtResource("10_qq7b2")]
+unique_name_in_owner = true
+position = Vector2(88, 56)
+
+[node name="RocketViewRoot" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(416, -160)
+
+[node name="RocketMap" parent="RocketViewRoot" instance=ExtResource("13_j1b8h")]
+
+[node name="RocketController" type="Node2D" parent="RocketViewRoot"]
+position = Vector2(-320, 0)
+script = ExtResource("14_4qmhu")
+_back_to_title_delay = 7
+
+[node name="RocketCamera" type="Camera2D" parent="RocketViewRoot"]
+offset = Vector2(64, 64)
+script = ExtResource("14_yivys")

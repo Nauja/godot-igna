@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ModuleSheet" load_steps=2 format=3 uid="uid://dbx0y4cfcraiv"]
+
+[ext_resource type="Script" path="res://src/autoload/module_sheet.gd" id="1_1p8gn"]
+
+[resource]
+script = ExtResource("1_1p8gn")
+module = 0
+max_integrity = 3
+integrity = 3
+max_charge = 3
+charge = 2
+cursor_hint = "power module"
+cursor_priority = 0

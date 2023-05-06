@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CrewSheet" load_steps=3 format=3 uid="uid://i4s6sv1d8mge"]
+
+[ext_resource type="Resource" uid="uid://cthpa31ab7f6" path="res://src/level/entity/fellow_human/fellow_human_pierre_data.tres" id="1_kheju"]
+[ext_resource type="Script" path="res://src/autoload/crew_sheet.gd" id="2_uv0cp"]
+
+[resource]
+script = ExtResource("2_uv0cp")
+_fellow_human_sheet = ExtResource("1_kheju")
+dialogue = "MAKE SURE TO FULLY \\n charge THE VEHICLE, ELSE WE\\n CANNOT MOVE"
+cursor_hint = "pierre"
+cursor_priority = 0
