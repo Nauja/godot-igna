@@ -1,3 +1,5 @@
+# On the rover map, we need to know the instances of the engine and power
+# modules
 class_name RoverMap
 extends Map
 
@@ -19,4 +21,5 @@ func _ready():
 func _get_module(val: Enums.EModule) -> Module:
 	if val == Enums.EModule.ENGINE:
 		return engine_module
+
 	return power_module

@@ -1,4 +1,5 @@
-# Script to add to an entity to make it pickable
+# Make the parent entity pickable.
+# The rover can move over the entity to pick it up
 class_name PickableEntity
 extends Node
 

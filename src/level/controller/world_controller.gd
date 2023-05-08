@@ -1,5 +1,6 @@
 # Controller for when on the world map.
-# The rover is controlled as in a tactical game
+# The rover is controlled as in a tactical game, and it can pickup objects
+# on the floor by moving over
 class_name WorldController
 extends Controller
 
@@ -40,6 +41,7 @@ var _remaining_range: int
 
 
 func _ready():
+	# Map this controller is active on
 	_map = Enums.EMap.WORLD
 	_allow_diagonals = true
 	super()

@@ -1,4 +1,5 @@
-# Script to add to an entity to make it interactable
+# Make the parent entity interactable.
+# The play can press the action key to interact with the entity
 class_name InteractableEntity
 extends Node
 

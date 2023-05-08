@@ -2,7 +2,7 @@
 class_name FireController
 extends Node
 
-# Tile map for the fire
+# Tile map for displaying the fire
 @export_subgroup("FireController")
 @export_node_path("TileMap") var _fire_tile_map_path: NodePath
 @onready var _fire_tile_map: TileMap = get_node(_fire_tile_map_path)
@@ -13,14 +13,10 @@ var _fire_step: int
 
 
 func _ready():
+	LevelSignals.level_ready.connect(_on_level_ready)
 	LevelSignals._get_fire_progression = _get_fire_progression
 	RoverSignals.rover_moved.connect(_check_rover_hit)
 	RoverSignals.action_performed.connect(_on_action_performed)
-	LevelSignals.level_ready.connect(_on_level_ready)
-
-
-func _get_fire_progression() -> int:
-	return _fire_step
 
 
 func _on_level_ready():
@@ -29,6 +25,11 @@ func _on_level_ready():
 	_refresh()
 
 
+func _get_fire_progression() -> int:
+	return _fire_step
+
+
+# Make the fire progress on rover actions
 func _on_action_performed():
 	var rover = RoverSignals.get_rover()
 	if not rover:
@@ -38,6 +39,7 @@ func _on_action_performed():
 		_progress()
 
 
+# Make the fire automatically progress if rover can't move
 func _process(delta):
 	var rover = RoverSignals.get_rover()
 	if not rover:
@@ -47,6 +49,7 @@ func _process(delta):
 		_progress()
 
 
+# Make the fire progress by one tile
 func _progress() -> void:
 	var game_over_limit = LevelSignals.tile_width + LevelSignals.tile_height
 	if _fire_step >= game_over_limit:
@@ -60,6 +63,7 @@ func _progress() -> void:
 		LevelSignals.game_over()
 
 
+# Check if rover is hit by the fire
 func _check_rover_hit() -> void:
 	var rover = RoverSignals.get_rover()
 	if not rover:
@@ -69,7 +73,7 @@ func _check_rover_hit() -> void:
 		rover.hit()
 
 
-# Refresh the tile map
+# Refresh the tile map to display fire progression
 func _refresh():
 	_fire_tile_map.clear()
 	var tile = Vector2i(0, 0)

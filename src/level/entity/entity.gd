@@ -71,9 +71,11 @@ func _on_rover_moved():
 	pass
 
 
+# Check if on the same tile as another entity
 func is_same_tile(other: Entity) -> bool:
 	return tile == other.tile
 
 
+# Check if facing the tile another entity is on
 func is_facing(other: Entity) -> bool:
 	return forward == other.tile
