@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://csmqy6bopqwve"]
+[gd_resource type="Resource" script_class="RoverExitSheet" load_steps=2 format=3 uid="uid://csmqy6bopqwve"]
 
 [ext_resource type="Script" path="res://src/autoload/rover_exit_sheet.gd" id="1_4u6f1"]
 

@@ -13,7 +13,7 @@ func _on_player_interact() -> void:
 	if not entity or not entity.visible:
 		return
 
-	var player = PlayerSignals.get_player()
+	var player = PlayerSignals.player
 	if not player:
 		return
 

@@ -1,4 +1,5 @@
+# Constants accessible from everywhere
 extends Node
 
 # Size of one tile
-const TILE_SIZE: Vector2i = Vector2i(8, 8)
+const TILE_SIZE: int = 8

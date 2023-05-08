@@ -15,13 +15,13 @@ func _ready():
 
 # This widget is only visible on the world map
 func _on_map_changed():
-	visible = LevelSignals.get_map() == Enums.EMap.WORLD
+	visible = LevelSignals.map == Enums.EMap.WORLD
 	_refresh()
 
 
 # Get the entity hovered by the label
 func _refresh():
-	var cursor = LevelSignals.get_cursor()
+	var cursor = LevelSignals.cursor
 	if not cursor:
 		return
 

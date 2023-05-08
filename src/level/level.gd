@@ -55,32 +55,38 @@ var _game_over_timer: float
 
 func _ready():
 	set_process(false)
+	# For the map
 	LevelSignals._get_map = _get_map
 	LevelSignals._tile_width = _get_tile_width
 	LevelSignals._tile_height = _get_tile_height
 	LevelSignals._width = _get_width
 	LevelSignals._height = _get_height
+	LevelSignals._get_entity = _get_entity
+	# For the cursor and A*
 	LevelSignals._get_cursor = _get_cursor
-	PlayerSignals._get_player = _get_player
-	RoverSignals._get_rover = _get_rover
-	RoverSignals._enter_rover = _enter_rover
-	RoverSignals._exit_rover = _exit_rover
 	LevelSignals._compute_path = _compute_path
 	LevelSignals._compute_range = _compute_range
 	LevelSignals._is_walkable = _is_walkable
-	LevelSignals._get_entity = _get_entity
-	RoverSignals.rover_moved.connect(_on_rover_moved)
-	LevelSignals._game_over = _game_over
+	# For the rover
+	RoverSignals._get_rover = _get_rover
+	LevelSignals._enter_rover = _enter_rover
+	LevelSignals._exit_rover = _exit_rover
 	LevelSignals._enter_rocket = _enter_rocket
-	RoverSignals._drop_bomb = _drop_bomb
-	RoverSignals._is_bomb = _is_bomb
-	RoverSignals._remove_bomb = _remove_bomb
+	LevelSignals._drop_bomb = _drop_bomb
+	LevelSignals._is_bomb = _is_bomb
+	LevelSignals._remove_bomb = _remove_bomb
+	RoverSignals.rover_moved.connect(_on_rover_moved)
+	# Other
+	PlayerSignals._get_player = _get_player
+	LevelSignals._game_over = _game_over
 	# Place the player on the map
 	_rover_map.add_entity(_player)
-	# Place the rover on start tile
+	# Place the rover the map
+	_world_map.add_entity(_rover)
 	_rover.tile = Utils.world_to_tile(find_child("RoverStart").position)
 	# Start level
 	LevelSignals.notify_level_ready()
+	# Start with the view outside of rover
 	_exit_rover()
 
 
@@ -305,7 +311,7 @@ func _drop_bomb() -> void:
 		_world_view_root.add_child(bomb)
 		bomb.tile = _rover.tile
 		_bombs.append(bomb)
-		RoverSignals.notify_bomb_dropped()
+		LevelSignals.notify_bomb_dropped()
 
 
 func _is_bomb(tile: Vector2i) -> bool:

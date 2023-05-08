@@ -3,9 +3,9 @@ extends CanvasLayer
 
 
 func _ready():
-	LevelSignals.rocket_entered.connect(_on_rocket_entered)
+	LevelSignals.map_changed.connect(_on_map_changed)
 
 
 # Hide the HUD on victory
-func _on_rocket_entered() -> void:
-	visible = false
+func _on_map_changed() -> void:
+	visible = LevelSignals.map != Enums.EMap.ROCKET

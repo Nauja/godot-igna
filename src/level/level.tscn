@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/level/level.gd" id="1_20w2u"]
 [ext_resource type="PackedScene" uid="uid://bdl3sx05xjv84" path="res://src/level/hud/hud.tscn" id="2_77qnb"]
 [ext_resource type="PackedScene" uid="uid://bvit6uasqxp0" path="res://src/level/entity/cursor/cursor.tscn" id="3_2q6qd"]
-[ext_resource type="PackedScene" uid="uid://dw3eai0yuod3p" path="res://src/level/map/debug/debug.tscn" id="3_fjpfs"]
+[ext_resource type="PackedScene" uid="uid://dvexclr8sxuam" path="res://src/level/map/debug/debug.tscn" id="3_fjpfs"]
 [ext_resource type="PackedScene" uid="uid://d2b55rnhvw8c1" path="res://src/level/entity/rover/rover.tscn" id="3_syn7l"]
 [ext_resource type="Texture2D" uid="uid://bcd8k2fh1vffv" path="res://src/tileset.png" id="4_208l4"]
 [ext_resource type="Script" path="res://src/level/controller/rover_controller.gd" id="6_w2nyn"]
@@ -44,6 +44,7 @@ _game_over_delay = 3
 unique_name_in_owner = true
 
 [node name="Debug" parent="WorldViewRoot" instance=ExtResource("3_fjpfs")]
+_map = 0
 
 [node name="MovementTileMap" type="TileMap" parent="WorldViewRoot"]
 z_index = 3

@@ -1,8 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bcvss54bbqkgy"]
-
-[ext_resource type="Script" path="res://src/autoload/rocket_enter_sheet.gd" id="1_bky30"]
-
-[resource]
-script = ExtResource("1_bky30")
-cursor_hint = ""
-cursor_priority = 0

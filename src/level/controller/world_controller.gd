@@ -108,11 +108,11 @@ func _process_cursor_select(delta):
 		LevelSignals.notify_cursor_moved()
 
 	if Input.is_action_pressed("bomb"):
-		RoverSignals.drop_bomb()
+		LevelSignals.drop_bomb()
 
 	if Input.is_action_just_pressed("action"):
 		if _cursor.tile == _rover.tile:
-			RoverSignals.enter_rover()
+			LevelSignals.enter_rover()
 		elif len(_path) != 0 and _rover.range > 0:
 			# Accept movement only if there is a valid path
 			_remaining_range = _rover.range

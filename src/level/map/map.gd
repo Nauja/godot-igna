@@ -61,8 +61,8 @@ func _compute_size() -> void:
 		tile_width = max(tile_width, rect.size.x)
 		tile_height = max(tile_height, rect.size.y)
 		_tile_maps.append(tile_map)
-	width = tile_width * Constants.TILE_SIZE.x
-	height = tile_height * Constants.TILE_SIZE.x
+	width = tile_width * Constants.TILE_SIZE
+	height = tile_height * Constants.TILE_SIZE
 
 
 # Combine all tile maps into a single collision map, and spikes map, to speed
@@ -119,6 +119,8 @@ func remove_entity(entity: Entity) -> void:
 func add_entity(entity: Entity) -> void:
 	if entities.find(entity) < 0:
 		entities.push_back(entity)
-	entity.get_parent().remove_child(entity)
+	var parent = entity.get_parent()
+	if parent:
+		parent.remove_child(entity)
 	add_child(entity)
 	entity.map = _map

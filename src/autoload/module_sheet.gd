@@ -1,3 +1,4 @@
+# Configuration of a module of the rover
 class_name ModuleSheet
 extends EntitySheet
 
@@ -14,7 +15,7 @@ extends EntitySheet
 @export var charge: int
 
 
-# Open a dialogue on interaction
+# Open a dialogue on player interaction
 func interact(player: Player, entity: Entity) -> void:
 	if LevelSignals.is_dialogue_open():
 		LevelSignals.close_dialogue()

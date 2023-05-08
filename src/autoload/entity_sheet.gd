@@ -1,3 +1,4 @@
+# Configuration of an entity
 class_name EntitySheet
 extends Resource
 

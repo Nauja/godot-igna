@@ -1,3 +1,4 @@
+# Configuration of a fellow human
 class_name FellowHumanSheet
 extends EntitySheet
 
@@ -6,7 +7,8 @@ extends EntitySheet
 @export var name: String
 
 
-func pickup(rover: Rover, entity: Entity) -> void:
-	entity.queue_free()
+# Rescue the fellow human when picked up by rover
+func pickup(rover: Rover, entity: Entity) -> bool:
 	LevelSignals.notify_human_rescued(entity.entity_sheet)
-	RoverSignals.enter_rover()
+	LevelSignals.enter_rover()
+	return true

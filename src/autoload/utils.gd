@@ -1,3 +1,4 @@
+# Some helper functions
 extends Node
 
 var rng = RandomNumberGenerator.new()
@@ -8,11 +9,11 @@ func distance(from: Vector2i, to: Vector2i) -> int:
 
 
 func tile_to_world(tile: Vector2i) -> Vector2:
-	return Vector2(tile.x * Constants.TILE_SIZE.x, tile.y * Constants.TILE_SIZE.y)
+	return Vector2(tile.x * Constants.TILE_SIZE, tile.y * Constants.TILE_SIZE)
 
 
 func world_to_tile(pos: Vector2) -> Vector2i:
-	return Vector2i(int(pos.x / Constants.TILE_SIZE.x), int(pos.y / Constants.TILE_SIZE.y))
+	return Vector2i(int(pos.x / Constants.TILE_SIZE), int(pos.y / Constants.TILE_SIZE))
 
 
 func facing_direction(dir: Vector2i) -> Enums.EDirection:

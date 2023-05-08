@@ -1,3 +1,4 @@
+# Configuration of a crew member
 class_name CrewSheet
 extends EntitySheet
 
@@ -11,7 +12,7 @@ var fellow_human_sheet: FellowHumanSheet:
 @export var dialogue: String
 
 
-# Open a dialogue on interaction
+# Open a dialogue on player interaction
 func interact(player: Player, entity: Entity) -> void:
 	if LevelSignals.is_dialogue_open():
 		LevelSignals.close_dialogue()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dw3eai0yuod3p"]
+[gd_scene load_steps=14 format=3 uid="uid://dvexclr8sxuam"]
 
 [ext_resource type="Script" path="res://src/level/map/map.gd" id="1_n6mph"]
 [ext_resource type="TileSet" uid="uid://b4bov7wsleo2e" path="res://src/level/map/desert/desert.tres" id="2_tvlyj"]
@@ -11,7 +11,7 @@
 [ext_resource type="Resource" uid="uid://dugnl803bxnmg" path="res://src/level/entity/fellow_human/fellow_human_babouchot_data.tres" id="9_gtv8e"]
 [ext_resource type="Resource" uid="uid://drvjf3os2i4sm" path="res://src/level/entity/fellow_human/fellow_human_claire_data.tres" id="10_2yayc"]
 [ext_resource type="Resource" uid="uid://cthpa31ab7f6" path="res://src/level/entity/fellow_human/fellow_human_pierre_data.tres" id="11_vrman"]
-[ext_resource type="PackedScene" uid="uid://6rflh2d6rod2" path="res://src/level/entity/rocket_enter/rocket_enter.tscn" id="12_gpn21"]
+[ext_resource type="PackedScene" uid="uid://dosrd8dwugg8l" path="res://src/level/entity/rocket_entry/rocket_entry.tscn" id="12_50ilq"]
 [ext_resource type="PackedScene" uid="uid://bd4bdhsfrdbcd" path="res://src/level/entity/worm/worm.tscn" id="13_ka1ya"]
 
 [node name="Debug" type="Node2D"]
@@ -35,36 +35,45 @@ position = Vector2(48, 104)
 
 [node name="PowerStation" parent="." instance=ExtResource("4_4i4nc")]
 position = Vector2(40, 40)
+map = null
 
 [node name="EnginePart" parent="." instance=ExtResource("5_1xs2c")]
 position = Vector2(32, 96)
+map = null
 
 [node name="EnginePart2" parent="." instance=ExtResource("5_1xs2c")]
 position = Vector2(32, 104)
+map = null
 
 [node name="PowerCell" parent="." instance=ExtResource("6_oo2ip")]
 position = Vector2(72, 96)
+map = null
 
 [node name="PowerCell2" parent="." instance=ExtResource("6_oo2ip")]
 position = Vector2(72, 104)
+map = null
 
 [node name="FellowHuman" parent="." instance=ExtResource("7_pdbam")]
 position = Vector2(24, 112)
+map = null
 _sheet = ExtResource("8_ai7qo")
 
 [node name="FellowHuman2" parent="." instance=ExtResource("7_pdbam")]
 position = Vector2(80, 112)
+map = null
 _sheet = ExtResource("9_gtv8e")
 
 [node name="FellowHuman3" parent="." instance=ExtResource("7_pdbam")]
 position = Vector2(24, 128)
+map = null
 _sheet = ExtResource("10_2yayc")
 
 [node name="FellowHuman4" parent="." instance=ExtResource("7_pdbam")]
 position = Vector2(80, 128)
+map = null
 _sheet = ExtResource("11_vrman")
 
-[node name="RocketEnter" parent="." instance=ExtResource("12_gpn21")]
+[node name="RocketEntry" parent="." instance=ExtResource("12_50ilq")]
 position = Vector2(80, 80)
 
 [node name="Worm" parent="." instance=ExtResource("13_ka1ya")]

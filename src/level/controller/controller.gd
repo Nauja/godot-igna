@@ -28,7 +28,7 @@ func _on_level_ready():
 
 # Prevent processing inputs when not on the desired map
 func _on_map_changed():
-	var current_map = LevelSignals.get_map()
+	var current_map = LevelSignals.map
 	set_process(_map == current_map)
 	set_physics_process(_map == current_map)
 

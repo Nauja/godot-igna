@@ -1,3 +1,4 @@
+# Rover moving on the world map
 class_name Rover
 extends Entity
 

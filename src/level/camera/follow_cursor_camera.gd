@@ -6,7 +6,7 @@ extends Camera
 
 # Center camera on cursor when level starts
 func _on_level_ready():
-	var cursor = LevelSignals.get_cursor()
+	var cursor = LevelSignals.cursor
 	if not cursor:
 		return
 
@@ -17,7 +17,7 @@ func _on_level_ready():
 
 # Follow the cursor
 func _process(delta):
-	var cursor = LevelSignals.get_cursor()
+	var cursor = LevelSignals.cursor
 	if not cursor:
 		return
 

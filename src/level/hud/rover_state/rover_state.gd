@@ -22,12 +22,12 @@ func _ready():
 
 # The move counter is only visible on the world map
 func _on_map_changed():
-	_move_counter.visible = LevelSignals.get_map() == Enums.EMap.WORLD
+	_move_counter.visible = LevelSignals.map == Enums.EMap.WORLD
 
 
 # Update the move counter
 func _refresh():
-	var rover = RoverSignals.get_rover()
+	var rover = RoverSignals.rover
 	if not rover:
 		return
 

@@ -1,3 +1,4 @@
+# Enums accessible from everywhere
 extends Node
 
 # List of screens in the game

@@ -31,7 +31,7 @@ func _get_fire_progression() -> int:
 
 # Make the fire progress on rover actions
 func _on_action_performed():
-	var rover = RoverSignals.get_rover()
+	var rover = RoverSignals.rover
 	if not rover:
 		return
 
@@ -41,7 +41,7 @@ func _on_action_performed():
 
 # Make the fire automatically progress if rover can't move
 func _process(delta):
-	var rover = RoverSignals.get_rover()
+	var rover = RoverSignals.rover
 	if not rover:
 		return
 
@@ -65,7 +65,7 @@ func _progress() -> void:
 
 # Check if rover is hit by the fire
 func _check_rover_hit() -> void:
-	var rover = RoverSignals.get_rover()
+	var rover = RoverSignals.rover
 	if not rover:
 		return
 

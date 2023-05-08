@@ -60,8 +60,8 @@ func _set_direction(val: Enums.EDirection) -> void:
 func _ready():
 	entity_sheet = entity_sheet
 	tile = Vector2i(
-		int(position.x / Constants.TILE_SIZE.x),
-		int(position.y / Constants.TILE_SIZE.y),
+		int(position.x / Constants.TILE_SIZE),
+		int(position.y / Constants.TILE_SIZE),
 	)
 	# React to when the rover moves
 	RoverSignals.rover_moved.connect(_on_rover_moved)

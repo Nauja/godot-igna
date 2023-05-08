@@ -1,4 +1,4 @@
-# Player related signals
+# Signals related to the player in the rover
 extends Node
 
 var _get_player: Callable
@@ -11,15 +11,16 @@ func reset() -> void:
 
 
 # Get the player instance
-func get_player() -> Player:
-	return _get_player.call() if _get_player else null
+var player: Player:
+	get:
+		return _get_player.call() if _get_player else null
 
 
-# Player moved by one tile
+# Notify when the player moved by one tile
 func notify_player_moved() -> void:
 	emit_signal("player_moved")
 
 
-# Player try to interact
+# Notify when the player pressed the action key
 func notify_player_interact() -> void:
 	emit_signal("player_interact")

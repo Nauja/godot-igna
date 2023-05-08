@@ -22,12 +22,12 @@ var _state: _EState = _EState.NONE:
 func _ready():
 	super()
 	RoverSignals.action_performed.connect(_on_action_performed)
-	RoverSignals.bomb_dropped.connect(_check_bomb_killed)
+	LevelSignals.bomb_dropped.connect(_check_bomb_killed)
 	_state = _EState.IDLE
 
 
 func _on_action_performed() -> void:
-	var rover = RoverSignals.get_rover()
+	var rover = RoverSignals.rover
 	if not rover:
 		return
 
@@ -43,7 +43,7 @@ func _on_action_performed() -> void:
 
 
 func _action() -> void:
-	var rover = RoverSignals.get_rover()
+	var rover = RoverSignals.rover
 	if not rover:
 		return
 
@@ -72,9 +72,9 @@ func _action() -> void:
 
 # Check if worm is killed by a bomb
 func _check_bomb_killed() -> bool:
-	if _state == _EState.MOVE and RoverSignals.is_bomb(self.tile):
+	if _state == _EState.MOVE and LevelSignals.is_bomb(self.tile):
 		_state = _EState.KILLED
-		RoverSignals.remove_bomb(self.tile)
+		LevelSignals.remove_bomb(self.tile)
 		return true
 
 	return false
