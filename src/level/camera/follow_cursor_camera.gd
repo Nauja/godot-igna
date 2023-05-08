@@ -1,16 +1,10 @@
-# Camera for when on the map
-class_name MapCamera
-extends Camera2D
+# Camera for when on the world map.
+# This camera follows the cursor as in a tactical game
+class_name FollowCursorCamera
+extends Camera
 
 
-func _ready():
-	LevelSignals.level_ready.connect(_on_level_ready)
-	RoverSignals.rover_entered.connect(_on_rover_entered)
-	RoverSignals.rover_exited.connect(_on_rover_exited)
-	LevelSignals.rocket_entered.connect(_on_rover_entered)
-
-
-# Center camera on cursor
+# Center camera on cursor when level starts
 func _on_level_ready():
 	var cursor = LevelSignals.get_cursor()
 	if not cursor:
@@ -21,17 +15,7 @@ func _on_level_ready():
 	global_position = Vector2(max(camera_pos.x, hscreen_size.x), max(camera_pos.y, hscreen_size.y))
 
 
-# Toggle the camera
-func _on_rover_entered():
-	set_process(false)
-
-
-func _on_rover_exited():
-	set_process(true)
-	make_current()
-
-
-# Follow cursor
+# Follow the cursor
 func _process(delta):
 	var cursor = LevelSignals.get_cursor()
 	if not cursor:

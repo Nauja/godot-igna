@@ -8,3 +8,6 @@ enum EDirection { LEFT, RIGHT, UP, DOWN }
 
 # Modules of the rover
 enum EModule { POWER, ENGINE }
+
+# Possible maps in a level
+enum EMap { WORLD, ROVER, ROCKET }

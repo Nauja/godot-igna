@@ -1,4 +1,4 @@
-# Control the fire on the map
+# Control the fire progression on the map
 class_name FireController
 extends Node
 

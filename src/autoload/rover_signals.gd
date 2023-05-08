@@ -10,8 +10,6 @@ var _drop_bomb: Callable
 var _is_bomb: Callable
 var _remove_bomb: Callable
 signal bomb_dropped
-signal rover_entered
-signal rover_exited
 signal rover_moved
 signal action_performed
 signal rover_charge_changed
@@ -54,14 +52,6 @@ func exit_rover() -> void:
 func stop_rover() -> void:
 	if _stop_rover:
 		_stop_rover.call()
-
-
-func notify_rover_entered():
-	emit_signal("rover_entered")
-
-
-func notify_rover_exited():
-	emit_signal("rover_exited")
 
 
 func notify_rover_moved():

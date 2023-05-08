@@ -1,27 +1,25 @@
+# Widget displaying the name of entity hovered by the cursor
 class_name CursorHint
 extends HBoxContainer
 
-# Label for the cursor hint
+# Label for the hint
 @onready var _cursor_hint_label: Label = %CursorHintLabel
 
 
 func _ready():
 	LevelSignals.level_ready.connect(_refresh)
+	LevelSignals.map_changed.connect(_on_map_changed)
 	LevelSignals.cursor_moved.connect(_refresh)
 	RoverSignals.rover_moved.connect(_refresh)
-	RoverSignals.rover_entered.connect(_on_rover_entered)
-	RoverSignals.rover_exited.connect(_on_rover_exited)
 
 
-func _on_rover_entered():
-	visible = false
-
-
-func _on_rover_exited():
-	visible = true
+# This widget is only visible on the world map
+func _on_map_changed():
+	visible = LevelSignals.get_map() == Enums.EMap.WORLD
 	_refresh()
 
 
+# Get the entity hovered by the label
 func _refresh():
 	var cursor = LevelSignals.get_cursor()
 	if not cursor:

@@ -12,6 +12,7 @@
 
 [node name="RoverMap" type="Node2D"]
 script = ExtResource("1_4ca5h")
+_map = 1
 _tile_map_paths = Array[NodePath]([NodePath("BackgroundTileMap")])
 
 [node name="ColorRect" type="ColorRect" parent="."]

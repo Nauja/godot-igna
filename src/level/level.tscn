@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dllu5w8u1uh46"]
+[gd_scene load_steps=20 format=3 uid="uid://cloii4npativ8"]
 
 [ext_resource type="Script" path="res://src/level/level.gd" id="1_20w2u"]
 [ext_resource type="PackedScene" uid="uid://bdl3sx05xjv84" path="res://src/level/hud/hud.tscn" id="2_77qnb"]
@@ -7,17 +7,16 @@
 [ext_resource type="PackedScene" uid="uid://d2b55rnhvw8c1" path="res://src/level/entity/rover/rover.tscn" id="3_syn7l"]
 [ext_resource type="Texture2D" uid="uid://bcd8k2fh1vffv" path="res://src/tileset.png" id="4_208l4"]
 [ext_resource type="Script" path="res://src/level/controller/rover_controller.gd" id="6_w2nyn"]
-[ext_resource type="Script" path="res://src/level/controller/map_controller.gd" id="7_w7e8d"]
 [ext_resource type="TileSet" uid="uid://cynu0qaxpbj65" path="res://src/level/map/fire.tres" id="8_8kxl0"]
-[ext_resource type="Script" path="res://src/level/camera/map_camera.gd" id="8_k1r70"]
-[ext_resource type="Script" path="res://src/level/camera/rover_camera.gd" id="8_nie0l"]
 [ext_resource type="PackedScene" uid="uid://1e0ml8tk1s1f" path="res://src/level/entity/bomb/bomb.tscn" id="8_qstlw"]
 [ext_resource type="PackedScene" uid="uid://43mktudtc0m8" path="res://src/level/map/rover_map/rover_map.tscn" id="9_7xilp"]
+[ext_resource type="Script" path="res://src/level/controller/world_controller.gd" id="9_mo3un"]
 [ext_resource type="Script" path="res://src/level/controller/fire_controller.gd" id="10_6a2s0"]
 [ext_resource type="PackedScene" uid="uid://d2uwlgt0x4to5" path="res://src/level/entity/player/player.tscn" id="10_qq7b2"]
+[ext_resource type="Script" path="res://src/level/camera/follow_cursor_camera.gd" id="11_3w1dl"]
 [ext_resource type="PackedScene" uid="uid://utmillepmpdf" path="res://src/level/map/rocket_map/rocket_map.tscn" id="13_j1b8h"]
 [ext_resource type="Script" path="res://src/level/controller/rocket_controller.gd" id="14_4qmhu"]
-[ext_resource type="Script" path="res://src/level/camera/rocket_camera.gd" id="14_yivys"]
+[ext_resource type="Script" path="res://src/level/camera/fixed_camera.gd" id="18_3qewb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c1ta5"]
 texture = ExtResource("4_208l4")
@@ -33,7 +32,7 @@ sources/0 = SubResource("TileSetAtlasSource_c1ta5")
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_20w2u")
-_map_path = NodePath("MapViewRoot/Debug")
+_world_map_path = NodePath("WorldViewRoot/Debug")
 _rover_map_path = NodePath("RoverViewRoot/RoverMap")
 _rocket_map_path = NodePath("RocketViewRoot/RocketMap")
 _bomb_scene = ExtResource("8_qstlw")
@@ -41,32 +40,32 @@ _game_over_delay = 3
 
 [node name="HUD" parent="." instance=ExtResource("2_77qnb")]
 
-[node name="MapViewRoot" type="Node2D" parent="."]
+[node name="WorldViewRoot" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Debug" parent="MapViewRoot" instance=ExtResource("3_fjpfs")]
+[node name="Debug" parent="WorldViewRoot" instance=ExtResource("3_fjpfs")]
 
-[node name="MovementTileMap" type="TileMap" parent="MapViewRoot"]
+[node name="MovementTileMap" type="TileMap" parent="WorldViewRoot"]
 z_index = 3
 tile_set = SubResource("TileSet_jyvlb")
 cell_quadrant_size = 8
 format = 2
 
-[node name="Cursor" parent="MapViewRoot" instance=ExtResource("3_2q6qd")]
+[node name="Cursor" parent="WorldViewRoot" instance=ExtResource("3_2q6qd")]
 unique_name_in_owner = true
 position = Vector2(56, 32)
 
-[node name="Rover" parent="MapViewRoot" instance=ExtResource("3_syn7l")]
+[node name="Rover" parent="WorldViewRoot" instance=ExtResource("3_syn7l")]
 unique_name_in_owner = true
 position = Vector2(56, 32)
 
-[node name="FireTileMap" type="TileMap" parent="MapViewRoot"]
+[node name="FireTileMap" type="TileMap" parent="WorldViewRoot"]
 tile_set = ExtResource("8_8kxl0")
 cell_quadrant_size = 8
 format = 2
 
-[node name="MapController" type="Node2D" parent="MapViewRoot"]
-script = ExtResource("7_w7e8d")
+[node name="WorldController" type="Node2D" parent="WorldViewRoot"]
+script = ExtResource("9_mo3un")
 _cursor_path = NodePath("../Cursor")
 _rover_path = NodePath("../Rover")
 _movement_tile_map_path = NodePath("../MovementTileMap")
@@ -76,13 +75,13 @@ _white_tile = Vector2i(2, 8)
 _red_tile = Vector2i(3, 8)
 _input_repeat = 0.25
 
-[node name="FireController" type="Node" parent="MapViewRoot"]
+[node name="FireController" type="Node" parent="WorldViewRoot"]
 script = ExtResource("10_6a2s0")
 _fire_tile_map_path = NodePath("../FireTileMap")
 _fire_progression_tiles = Array[Vector2i]([Vector2i(3, 5), Vector2i(2, 5), Vector2i(1, 5), Vector2i(0, 5)])
 
-[node name="MapCamera" type="Camera2D" parent="MapViewRoot"]
-script = ExtResource("8_k1r70")
+[node name="FollowCursorCamera" type="Camera2D" parent="WorldViewRoot"]
+script = ExtResource("11_3w1dl")
 
 [node name="RoverViewRoot" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -95,10 +94,11 @@ script = ExtResource("6_w2nyn")
 _player_path = NodePath("../Player")
 _input_repeat = 0.25
 
-[node name="RoverCamera" type="Camera2D" parent="RoverViewRoot"]
+[node name="FixedCamera" type="Camera2D" parent="RoverViewRoot"]
 position = Vector2(96, 32)
 offset = Vector2(64, 64)
-script = ExtResource("8_nie0l")
+script = ExtResource("18_3qewb")
+_map = 1
 
 [node name="Player" parent="RoverViewRoot" instance=ExtResource("10_qq7b2")]
 unique_name_in_owner = true
@@ -113,6 +113,7 @@ position = Vector2(320, -192)
 script = ExtResource("14_4qmhu")
 _back_to_title_delay = 7
 
-[node name="RocketCamera" type="Camera2D" parent="RocketViewRoot"]
+[node name="FixedCamera" type="Camera2D" parent="RocketViewRoot"]
 position = Vector2(160, 96)
-script = ExtResource("14_yivys")
+script = ExtResource("18_3qewb")
+_map = 2

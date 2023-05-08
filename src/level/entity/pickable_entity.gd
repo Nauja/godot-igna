@@ -9,12 +9,12 @@ func _ready():
 
 func _on_rover_moved() -> void:
 	var entity = get_parent()
-	if not entity:
+	if not entity or not entity.visible:
 		return
 
 	var rover = RoverSignals.get_rover()
 	if not rover:
 		return
 
-	if rover.tile == entity.tile:
+	if entity.map == rover.map and entity.tile == rover.tile:
 		entity.entity_sheet.pickup(rover, entity)

@@ -2,6 +2,8 @@
 extends Node
 
 signal level_ready
+signal map_changed
+var _get_map: Callable
 var _tile_width: Callable
 var _tile_height: Callable
 var _width: Callable
@@ -25,6 +27,7 @@ signal fire_progressed
 
 
 func reset() -> void:
+	_get_map = Callable()
 	_tile_width = Callable()
 	_tile_height = Callable()
 	_width = Callable()
@@ -67,6 +70,16 @@ var width: int:
 var height: int:
 	get:
 		return _height.call() if _height else 0
+
+
+# Notify that the current map changed
+func notify_map_changed() -> void:
+	emit_signal("map_changed")
+
+
+# Get the current map
+func get_map() -> Enums.EMap:
+	return _get_map.call() if _get_map else Enums.EMap.WORLD
 
 
 # Get the cursor instance

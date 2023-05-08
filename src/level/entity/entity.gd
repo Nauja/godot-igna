@@ -2,8 +2,10 @@
 class_name Entity
 extends Node2D
 
-# Initial configuration of the entity
+# Map the entity is on
 @export_subgroup("Entity")
+@export var map: Enums.EMap
+# Initial configuration of the entity
 @export var _sheet: Resource
 var entity_sheet: EntitySheet:
 	get = _get_entity_sheet,

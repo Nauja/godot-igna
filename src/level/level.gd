@@ -1,12 +1,11 @@
 extends Node
 
 enum _EState { IDLE, GAME_OVER }
-enum _EView { MAP, ROVER, ROCKET }
 
-# Instance of the map
+# Instance of the world map
 @export_subgroup("Level")
-@export_node_path("Map") var _map_path: NodePath
-@onready var _map: Map = get_node(_map_path)
+@export_node_path("Map") var _world_map_path: NodePath
+@onready var _world_map: Map = get_node(_world_map_path)
 # Instance of the rover map
 @export_node_path("RoverMap") var _rover_map_path: NodePath
 @onready var _rover_map: RoverMap = get_node(_rover_map_path)
@@ -27,25 +26,25 @@ enum _EView { MAP, ROVER, ROCKET }
 @onready var _player_start_rocket: Node2D = _rocket_map.find_child("PlayerStart")
 # Instance of the rover
 @onready var _rover: Rover = %Rover
-# Root node for the map view
-@onready var _map_view_root: Node = %MapViewRoot
+# Root node for the world view
+@onready var _world_view_root: Node = %WorldViewRoot
 # Root node for the rover view
 @onready var _rover_view_root: Node = %RoverViewRoot
 # Root node for the rocket view
 @onready var _rocket_view_root: Node = %RocketViewRoot
-# Current view
-var _view: _EView = _EView.MAP
+# Current map
+var _map: Enums.EMap
 # Current state
 var _state: _EState = _EState.IDLE
 # Entities on the curent map
 var _entities: Array[Entity]:
 	get:
-		match _view:
-			_EView.MAP:
-				return _map.entities
-			_EView.ROVER:
+		match _map:
+			Enums.EMap.WORLD:
+				return _world_map.entities
+			Enums.EMap.ROVER:
 				return _rover_map.entities
-			_EView.ROCKET:
+			Enums.EMap.ROCKET:
 				return _rocket_map.entities
 		return []
 # Bombs on the map
@@ -56,6 +55,7 @@ var _game_over_timer: float
 
 func _ready():
 	set_process(false)
+	LevelSignals._get_map = _get_map
 	LevelSignals._tile_width = _get_tile_width
 	LevelSignals._tile_height = _get_tile_height
 	LevelSignals._width = _get_width
@@ -75,27 +75,33 @@ func _ready():
 	RoverSignals._drop_bomb = _drop_bomb
 	RoverSignals._is_bomb = _is_bomb
 	RoverSignals._remove_bomb = _remove_bomb
-	# Place rover on start tile
+	# Place the player on the map
+	_rover_map.add_entity(_player)
+	# Place the rover on start tile
 	_rover.tile = Utils.world_to_tile(find_child("RoverStart").position)
 	# Start level
 	LevelSignals.notify_level_ready()
 	_exit_rover()
 
 
+func _get_map() -> Enums.EMap:
+	return _map
+
+
 func _get_tile_width() -> int:
-	return _map.tile_width
+	return _world_map.tile_width
 
 
 func _get_tile_height() -> int:
-	return _map.tile_height
+	return _world_map.tile_height
 
 
 func _get_width() -> int:
-	return _map.width
+	return _world_map.width
 
 
 func _get_height() -> int:
-	return _map.height
+	return _world_map.height
 
 
 func _get_cursor() -> Cursor:
@@ -114,35 +120,35 @@ func _enter_rover() -> void:
 	Input.action_release("action")
 	_player.tile = Utils.world_to_tile(_player_start_rover.position)
 	_player.direction = Enums.EDirection.LEFT
-	_map_view_root.visible = false
+	_world_view_root.visible = false
 	_rover_view_root.visible = true
 	_rocket_view_root.visible = false
-	_view = _EView.ROVER
+	_map = Enums.EMap.ROVER
 	_rover.is_paused = true
-	RoverSignals.notify_rover_entered()
+	LevelSignals.notify_map_changed()
 
 
 func _exit_rover() -> void:
 	Input.action_release("action")
-	_map_view_root.visible = true
+	_world_view_root.visible = true
 	_rover_view_root.visible = false
 	_rocket_view_root.visible = false
-	_view = _EView.MAP
+	_map = Enums.EMap.WORLD
 	_rover.is_paused = false
-	RoverSignals.notify_rover_exited()
+	LevelSignals.notify_map_changed()
 
 
 func _enter_rocket() -> void:
 	Input.action_release("action")
-	_rover_view_root.remove_child(_player)
-	_rocket_view_root.add_child(_player)
+	_rover_map.remove_entity(_player)
+	_rocket_map.add_entity(_player)
 	_player.tile = Utils.world_to_tile(_player_start_rocket.position)
 	_player.direction = Enums.EDirection.DOWN
-	_map_view_root.visible = false
+	_world_view_root.visible = false
 	_rover_view_root.visible = false
 	_rocket_view_root.visible = true
-	_view = _EView.ROCKET
-	LevelSignals.notify_rocket_entered()
+	_map = Enums.EMap.ROCKET
+	LevelSignals.notify_map_changed()
 
 
 func _process(delta):
@@ -183,7 +189,7 @@ func _compute_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
 				if (i == 0 or j == 0) and i != j:
 					next.x = current.tile.x + i
 					next.y = current.tile.y + j
-					if not _map.is_walkable(next):
+					if not _world_map.is_walkable(next):
 						continue
 
 					var new_cost = cost_so_far[current.tile] + 1  # add extra costs here
@@ -227,7 +233,7 @@ func _compute_range(center: Vector2i, distance: int) -> Array[Vector2i]:
 						or next.y > reachbox.end.y
 					):
 						continue
-					if not _map.is_walkable(next):
+					if not _world_map.is_walkable(next):
 						continue
 
 					var old_cost = cost_so_far.get(next)
@@ -263,7 +269,7 @@ func _insert(l: Array[_PriorityTile], tile: Vector2i, priority: int) -> void:
 
 # Check if a tile is walkable
 func _is_walkable(tile: Vector2i) -> bool:
-	return (_map if _view == _EView.MAP else _rover_map).is_walkable(tile)
+	return (_world_map if _map == Enums.EMap.WORLD else _rover_map).is_walkable(tile)
 
 
 func _get_entity(tile: Vector2i) -> Entity:
@@ -283,7 +289,7 @@ func _get_entity(tile: Vector2i) -> Entity:
 
 # Detect collision with spikes here
 func _on_rover_moved() -> void:
-	if _map.is_spikes(_rover.tile):
+	if _world_map.is_spikes(_rover.tile):
 		_rover.hit()
 
 
@@ -296,7 +302,7 @@ func _game_over() -> void:
 func _drop_bomb() -> void:
 	if not _is_bomb(_rover.tile):
 		var bomb = _bomb_scene.instantiate()
-		_map_view_root.add_child(bomb)
+		_world_view_root.add_child(bomb)
 		bomb.tile = _rover.tile
 		_bombs.append(bomb)
 		RoverSignals.notify_bomb_dropped()

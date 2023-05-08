@@ -1,34 +1,31 @@
-# Display the state of the rover
+# Widget displaying the state of the rover and the move counter
 class_name RoverState
 extends Node
 
-# Normal color of the movement counter
+# Normal color of the move counter
 @export_subgroup("RoverState")
 @export var _move_counter_normal: Color
-# Color of the movement counter to indicate danger
+# Color of the move counter to indicate danger
 @export var _move_counter_danger: Color
-# Movement counter displayed only when on the map
+# Root of the move counter
 @onready var _move_counter: Node = %MoveCounter
-# Display the remaining number of movements
+# Display the number of remaining moves
 @onready var _move_counter_label: Label = %MoveCounterLabel
 
 
 func _ready():
 	LevelSignals.level_ready.connect(_refresh)
-	RoverSignals.rover_entered.connect(_on_rover_entered)
-	RoverSignals.rover_exited.connect(_on_rover_exited)
+	LevelSignals.map_changed.connect(_on_map_changed)
 	RoverSignals.rover_moved.connect(_refresh)
-	_on_rover_exited()
+	_on_map_changed()
 
 
-func _on_rover_entered():
-	_move_counter.visible = false
+# The move counter is only visible on the world map
+func _on_map_changed():
+	_move_counter.visible = LevelSignals.get_map() == Enums.EMap.WORLD
 
 
-func _on_rover_exited():
-	_move_counter.visible = true
-
-
+# Update the move counter
 func _refresh():
 	var rover = RoverSignals.get_rover()
 	if not rover:

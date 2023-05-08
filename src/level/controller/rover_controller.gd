@@ -1,4 +1,4 @@
-# Input controller for when in the rover.
+# Controller for when in the rover.
 # The crew is controller as in an old-school RPG game
 class_name RoverController
 extends Controller
@@ -15,7 +15,7 @@ var _input_delay: float
 
 
 func _ready():
-	_map = _EMap.ROVER
+	_map = Enums.EMap.ROVER
 	_allow_diagonals = false
 	super()
 

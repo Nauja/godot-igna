@@ -1,4 +1,4 @@
-# Input controller for when in the rocket.
+# Controller for when in the rocket.
 # The player can't move in the rocket
 class_name RocketController
 extends Controller
@@ -11,7 +11,7 @@ var _back_to_title_timer: float
 
 
 func _ready():
-	_map = _EMap.ROCKET
+	_map = Enums.EMap.ROCKET
 	super()
 	_back_to_title_timer = _back_to_title_delay
 

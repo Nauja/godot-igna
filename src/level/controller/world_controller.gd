@@ -1,6 +1,6 @@
-# Input controller for when on the map.
+# Controller for when on the world map.
 # The rover is controlled as in a tactical game
-class_name MapController
+class_name WorldController
 extends Controller
 
 enum _EInputMode { GAMEPAD, MOUSE }
@@ -40,7 +40,7 @@ var _remaining_range: int
 
 
 func _ready():
-	_map = _EMap.MAP
+	_map = Enums.EMap.WORLD
 	_allow_diagonals = true
 	super()
 	RoverSignals.rover_charging.connect(_stop_rover)

@@ -1,10 +1,14 @@
+# Base for controllers.
+# We basically have two controllers:
+# - WorldController: handles inputs when outside of rover
+# - RoverController: handles inputs when inside of rover
 class_name Controller
 extends Node2D
 
-enum _EMap { MAP, ROVER, ROCKET }
-
-# The map for the controller to be active
-var _map: _EMap
+# Map the controller is active on.
+# The controller does _process and _physics_process only when this is the
+# current map
+var _map: Enums.EMap
 # Allow moving in all 8 directions
 var _allow_diagonals: bool
 # Pressed directions
@@ -15,32 +19,21 @@ var input_direction: Vector2i = Vector2i(0, 0):
 
 func _ready():
 	LevelSignals.level_ready.connect(_on_level_ready)
-	RoverSignals.rover_entered.connect(_on_rover_entered)
-	RoverSignals.rover_exited.connect(_on_rover_exited)
-	LevelSignals.rocket_entered.connect(_on_rocket_entered)
+	LevelSignals.map_changed.connect(_on_map_changed)
 
 
 func _on_level_ready():
 	pass
 
 
-# Prevent processing input when controller should be inactive
-func _on_rover_entered():
-	set_process(_map == _EMap.ROVER)
-	set_physics_process(_map == _EMap.ROVER)
+# Prevent processing inputs when not on the desired map
+func _on_map_changed():
+	var current_map = LevelSignals.get_map()
+	set_process(_map == current_map)
+	set_physics_process(_map == current_map)
 
 
-func _on_rover_exited():
-	set_process(_map == _EMap.MAP)
-	set_physics_process(_map == _EMap.MAP)
-
-
-func _on_rocket_entered():
-	set_process(_map == _EMap.ROCKET)
-	set_physics_process(_map == _EMap.ROCKET)
-
-
-# Return the current pressed direction
+# Compute the pressed direction
 func _process(delta) -> void:
 	if not _allow_diagonals:
 		_process_input_no_diagonals()
@@ -48,6 +41,7 @@ func _process(delta) -> void:
 		_process_input_diagonals()
 
 
+# Compute the pressed direction, not allowing diagonals (player inside of rover)
 func _process_input_no_diagonals() -> void:
 	if (
 		Input.is_action_just_pressed("move_left")
@@ -80,6 +74,7 @@ func _process_input_no_diagonals() -> void:
 		input_direction.y = 0
 
 
+# Compute the pressed direction, allowing diagonals (cursor outside of rover)
 func _process_input_diagonals() -> void:
 	if Input.is_action_pressed("move_left"):
 		input_direction.x = -1
