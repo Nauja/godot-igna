@@ -61,6 +61,7 @@ func _ready():
 	LevelSignals._tile_height = _get_tile_height
 	LevelSignals._width = _get_width
 	LevelSignals._height = _get_height
+	LevelSignals._get_entities = _get_entities
 	LevelSignals._get_entity = _get_entity
 	# For the cursor and A*
 	LevelSignals._get_cursor = _get_cursor
@@ -276,6 +277,10 @@ func _insert(l: Array[_PriorityTile], tile: Vector2i, priority: int) -> void:
 # Check if a tile is walkable
 func _is_walkable(tile: Vector2i) -> bool:
 	return (_world_map if _map == Enums.EMap.WORLD else _rover_map).is_walkable(tile)
+
+
+func _get_entities() -> Array[Entity]:
+	return _entities
 
 
 func _get_entity(tile: Vector2i) -> Entity:

@@ -21,7 +21,7 @@ func _process(delta):
 			GameSignals.load_screen(Enums.EScreen.LEVEL)
 
 
-# Display the next message and return true.
+# Display the next message and returns true.
 # Return false if there is no more message
 func _next_message() -> bool:
 	_message_index += 1

@@ -41,7 +41,20 @@ func _physics_process(delta):
 	if (dir.x != 0 or dir.y != 0) and _input_delay <= 0:
 		_input_delay = _input_repeat
 		var desired_tile = _player.tile + dir
-		if LevelSignals.is_walkable(desired_tile):
+		if _is_walkable(desired_tile):
 			_player.tile += dir
 		_player.direction = Utils.facing_direction(dir)
 		PlayerSignals.notify_player_moved()
+
+
+# Return if a tile of the map is walkable
+func _is_walkable(tile: Vector2i) -> bool:
+	if not LevelSignals.is_walkable(tile):
+		return false
+
+	var entities = LevelSignals.entities
+	for entity in entities:
+		if entity.visible and entity.tile == tile:
+			return false
+
+	return true

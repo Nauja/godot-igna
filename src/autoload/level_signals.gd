@@ -9,6 +9,7 @@ var _tile_width: Callable
 var _tile_height: Callable
 var _width: Callable
 var _height: Callable
+var _get_entities: Callable
 var _get_entity: Callable
 # For the rover
 var _enter_rover: Callable
@@ -43,6 +44,7 @@ func reset() -> void:
 	_tile_height = Callable()
 	_width = Callable()
 	_height = Callable()
+	_get_entities = Callable()
 	_get_entity = Callable()
 	# For the rover
 	_enter_rover = Callable()
@@ -174,6 +176,16 @@ func is_walkable(tile: Vector2i) -> bool:
 # Notify when the cursor moved by one tile
 func notify_cursor_moved():
 	emit_signal("cursor_moved")
+
+
+# Get all entities on the current map
+var entities: Array[Entity]:
+	get:
+		if _get_entities:
+			return _get_entities.call()
+
+		var result: Array[Entity] = []
+		return result
 
 
 # Get the topmost entity on a tile
