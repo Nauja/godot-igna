@@ -18,6 +18,9 @@ extends Node
 @onready var _integrity_bar: IntegrityBar = %IntegrityBar
 # Label to display the number of charges of the module
 @onready var _charge_label: Label = %ChargeLabel
+# Colors of the charge label
+@export_subgroup("Theme")
+@export var _charge_colors: Array[Color]
 # Spawned animation player
 var _animation_player: AnimationPlayer
 # Number of charges
@@ -43,4 +46,8 @@ func _refresh():
 
 	# Update label
 	if _charge_label:
-		_charge_label.text = str(value)
+		var charge_level = value
+		_charge_label.text = str(charge_level)
+		_charge_label.add_theme_color_override(
+			"font_color", _charge_colors[clamp(charge_level - 1, 0, len(_charge_colors) - 1)]
+		)
