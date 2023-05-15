@@ -35,42 +35,33 @@ position = Vector2(48, 104)
 
 [node name="PowerStation" parent="." instance=ExtResource("4_4i4nc")]
 position = Vector2(40, 40)
-map = null
 
 [node name="EnginePart" parent="." instance=ExtResource("5_1xs2c")]
 position = Vector2(32, 96)
-map = null
 
 [node name="EnginePart2" parent="." instance=ExtResource("5_1xs2c")]
 position = Vector2(32, 104)
-map = null
 
 [node name="PowerCell" parent="." instance=ExtResource("6_oo2ip")]
 position = Vector2(72, 96)
-map = null
 
 [node name="PowerCell2" parent="." instance=ExtResource("6_oo2ip")]
 position = Vector2(72, 104)
-map = null
 
 [node name="FellowHuman" parent="." instance=ExtResource("7_pdbam")]
 position = Vector2(24, 112)
-map = null
 _sheet = ExtResource("8_ai7qo")
 
 [node name="FellowHuman2" parent="." instance=ExtResource("7_pdbam")]
 position = Vector2(80, 112)
-map = null
 _sheet = ExtResource("9_gtv8e")
 
 [node name="FellowHuman3" parent="." instance=ExtResource("7_pdbam")]
 position = Vector2(24, 128)
-map = null
 _sheet = ExtResource("10_2yayc")
 
 [node name="FellowHuman4" parent="." instance=ExtResource("7_pdbam")]
 position = Vector2(80, 128)
-map = null
 _sheet = ExtResource("11_vrman")
 
 [node name="RocketEntry" parent="." instance=ExtResource("12_50ilq")]
