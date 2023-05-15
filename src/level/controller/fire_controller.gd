@@ -5,11 +5,15 @@ extends Node
 # Tile map for displaying the fire
 @export_subgroup("FireController")
 @export_node_path("TileMap") var _fire_tile_map_path: NodePath
+# Delay before two fire progression when the rover can't move
+@export var _fire_progression_delay: float
 @onready var _fire_tile_map: TileMap = get_node(_fire_tile_map_path)
 # Tiles of the tile set for the fire progression
 @export var _fire_progression_tiles: Array[Vector2i]
 # Current progression
 var _fire_step: int
+# Time before the next fire progression
+var _fire_progression_timer: float
 
 
 func _ready():
@@ -40,12 +44,14 @@ func _on_action_performed():
 
 
 # Make the fire automatically progress if rover can't move
-func _process(delta):
+func _physics_process(delta):
 	var rover = RoverSignals.rover
-	if not rover:
+	if not rover or rover.range > 0:
 		return
 
-	if rover.range == 0:
+	_fire_progression_timer -= delta
+	if _fire_progression_timer <= 0.0:
+		_fire_progression_timer = _fire_progression_delay
 		_progress()
 
 

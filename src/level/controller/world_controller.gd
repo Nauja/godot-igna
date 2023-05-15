@@ -187,7 +187,11 @@ func _refresh_cursor_select():
 
 	# Refresh the range indicators
 	_movement_tile_map.clear()
+	var rover_tile = _rover.tile
 	for tile in _range:
+		if tile == rover_tile:
+			continue
+
 		_movement_tile_map.set_cell(0, tile, 0, _grey_tile)
 
 	# Refresh the path indicators
@@ -195,6 +199,9 @@ func _refresh_cursor_select():
 	var path_index = 1
 	var rover_range = _rover.range
 	for tile in _path:
+		if tile == rover_tile:
+			continue
+
 		if path_index > rover_range:
 			_movement_tile_map.set_cell(0, tile, 0, _red_tile)
 		elif (path_len <= rover_range and path_index == path_len) or path_index == rover_range:

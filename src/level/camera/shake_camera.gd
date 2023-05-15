@@ -6,8 +6,12 @@ extends Camera
 # Shake strength
 @export_subgroup("Camera")
 @export var _strength: int
+# Delay between two shakes
+@export var _delay: float
 # Initial camera position
 var _initial_position: Vector2
+# Remaining time before next shake
+var _timer: float
 
 
 func _ready():
@@ -16,6 +20,11 @@ func _ready():
 
 
 func _physics_process(delta):
+	_timer -= delta
+	if _timer > 0:
+		return
+
+	_timer = _delay
 	position = (
 		_initial_position
 		+ (

@@ -8,6 +8,8 @@ var rover_sheet: RoverSheet:
 	set = _set_rover_sheet
 # Sprite of the rover
 @onready var _sprite: Sprite2D = %Sprite2D
+# Sprite when charging
+@onready var _charging_sprite: Sprite2D = %ChargingSprite
 # Get the power module
 var power_module: Module:
 	get:
@@ -40,6 +42,8 @@ var is_paused: bool
 var is_charging: bool:
 	get:
 		return is_charging
+# Delay before next frame of the charging animation
+var _charging_frame_delay: float
 
 
 func _get_rover_sheet() -> RoverSheet:
@@ -84,6 +88,22 @@ func _get_range() -> int:
 func _ready():
 	super()
 	direction = Enums.EDirection.DOWN
+
+
+func _physics_process(delta):
+	if is_charging:
+		_charging_frame_delay -= delta
+		if _charging_frame_delay > 0:
+			return
+
+		# Make the animation 30 fps as in the original game
+		_charging_frame_delay = 1.0 / 30.0
+		_charging_sprite.visible = true
+		_charging_sprite.region_rect = Rect2(
+			0, 0, ceil(Utils.rng.randf() * 8.0), ceil(Utils.rng.randf() * 8.0)
+		)
+	elif _charging_sprite.visible:
+		_charging_sprite.visible = false
 
 
 # Lose one integrity of the power module

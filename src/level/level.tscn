@@ -79,6 +79,7 @@ _input_repeat = 0.25
 [node name="FireController" type="Node" parent="WorldViewRoot"]
 script = ExtResource("10_6a2s0")
 _fire_tile_map_path = NodePath("../FireTileMap")
+_fire_progression_delay = 0.016
 _fire_progression_tiles = Array[Vector2i]([Vector2i(3, 5), Vector2i(2, 5), Vector2i(1, 5), Vector2i(0, 5)])
 
 [node name="FollowCursorCamera" type="Camera2D" parent="WorldViewRoot"]
@@ -125,4 +126,5 @@ _back_to_title_delay = 7
 position = Vector2(160, 96)
 script = ExtResource("18_r6j0t")
 _strength = 4
+_delay = 0.033
 _map = 2
