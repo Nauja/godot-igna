@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="EntitySheet" load_steps=2 format=3 uid="uid://dd3dirqa6hut7"]
-
-[ext_resource type="Script" path="res://src/autoload/entity_sheet.gd" id="1_fiixf"]
-
-[resource]
-script = ExtResource("1_fiixf")
-cursor_hint = ""
-cursor_priority = 0

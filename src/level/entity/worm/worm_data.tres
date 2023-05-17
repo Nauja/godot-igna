@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Wormsheet" load_steps=2 format=3 uid="uid://tbyyum4a3le1"]
-
-[ext_resource type="Script" path="res://src/autoload/worm_sheet.gd" id="1_wy1ov"]
-
-[resource]
-script = ExtResource("1_wy1ov")
-cursor_hint = "sands worm"
-cursor_priority = 0
