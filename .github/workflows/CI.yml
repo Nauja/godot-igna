@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+      - "LICENSE"
+
+env:
+  GODOT_VERSION: 4.0.2
+  EXPORT_NAME: Igna
+
+jobs:
+  windows:
+    name: Windows Export
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          lfs: true
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: 4.0.2
+          use-dotnet: false
+      - name: Build
+        run: |
+          mkdir -v -p build/windows
+          godot -v --export-release "Windows Desktop" --headless ./build/windows/${EXPORT_NAME}.exe
+      - name: Upload Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v1
+        with:
+          name: windows
+          path: build/windows
+
+  web:
+    name: Web Export
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          lfs: true
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: 4.0.2
+          use-dotnet: false
+      - name: Build
+        run: |
+          mkdir -v -p build/web
+          godot -v --export-release "HTML5" --headless ./build/web/index.html
+      - name: Upload Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v1
+        with:
+          name: web
+          path: build/web
+      - name: Install rsync 📚
+        if: github.ref == 'refs/heads/main'
+        run: |
+          apt-get update && apt-get install -y rsync
+      - name: Deploy to GitHub Pages 🚀
+        if: github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          branch: gh-pages
+          folder: build/web
