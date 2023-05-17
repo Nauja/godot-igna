@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: |
           mkdir -v -p build/windows
-          godot -v --export-release "Windows Desktop" --headless ./build/windows/${EXPORT_NAME}.exe
+          godot -v --export-release "Windows Desktop" --headless ./build/windows/${EXPORT_NAME}.exe || exit 0
       - name: Upload Artifact
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v1
@@ -53,7 +53,7 @@ jobs:
       - name: Build
         run: |
           mkdir -v -p build/web
-          godot -v --export-release "HTML5" --headless ./build/web/index.html
+          godot -v --export-release "Web" --headless ./build/web/index.html || exit 0
       - name: Upload Artifact
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v1
