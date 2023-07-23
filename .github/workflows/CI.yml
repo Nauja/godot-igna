@@ -7,7 +7,6 @@ on:
       - "LICENSE"
 
 env:
-  GODOT_VERSION: 4.0.2
   EXPORT_NAME: Igna
 
 jobs:
@@ -23,7 +22,7 @@ jobs:
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v1
         with:
-          version: 4.0.2
+          version: 4.1.1
           use-dotnet: false
       - name: Build
         run: |
@@ -48,7 +47,7 @@ jobs:
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v1
         with:
-          version: 4.0.2
+          version: 4.1.1
           use-dotnet: false
       - name: Build
         run: |
